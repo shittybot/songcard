@@ -1,0 +1,30 @@
+{
+  "name": "songcard",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LewdHuTao",
+  "license": "ISC",
+  "description": "A simple package to create song card.",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "jimp": "^0.3.5",
+    "pretty-ms": "^8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LewdHuTao/songcard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LewdHuTao/songcard/issues"
+  },
+  "homepage": "https://github.com/LewdHuTao/songcard#readme",
+  "keywords": [
+    "discord.js",
+    "discord",
+    "music bot",
+    "song card"
+  ]
+}
