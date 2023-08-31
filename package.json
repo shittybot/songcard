@@ -26,5 +26,6 @@
     "discord",
     "music bot",
     "song card"
-  ]
+  ],
+  "devDependencies": {}
 }
