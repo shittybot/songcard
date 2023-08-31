@@ -44,7 +44,7 @@ async function createCard(imageBg, imageText, trackStream, trackDuration) {
   ctx.font = "30px Arial";
   const text1X = 420;
   const text1Y = 330;
-  ctx.fillText(trackStream ? LIVE : "0.00", text1X, text1Y);
+  ctx.fillText(trackStream ? LIVE : "0:00", text1X, text1Y);
 
   ctx.fillStyle = "#fff";
   ctx.font = "30px Arial";
