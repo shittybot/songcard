@@ -75,7 +75,7 @@ async function createCard(
   let duration;
 
   if (trackDuration === null) {
-    duration = "0:00";
+    duration = 0.0;
   }
   if (trackDuration) {
     duration = prettyMilliseconds(trackDuration, {
