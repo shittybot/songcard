@@ -74,8 +74,8 @@ async function createCard(
 
   let duration;
 
-  if (trackDuration === null) {
-    duration = 0.0;
+  if (!trackDuration) {
+    duration = "0:00";
   }
   if (trackDuration) {
     duration = prettyMilliseconds(trackDuration, {
@@ -84,11 +84,24 @@ async function createCard(
     });
   }
 
+  let totalDuration;
+
+  if (!trackTotalDuration) {
+      totalDuration = "0:00";
+  }
+     if (trackTotalDuration) {
+      totalDuration = prettyMilliseconds(trackTotalDuration, {
+        colonNotation: true,
+        secondsDecimalDigits: 0,
+      });
+     
+  }
+
   ctx.fillStyle = "#fff";
   ctx.font = "30px Arial";
   const text1X = 420;
   const text1Y = 330;
-  ctx.fillText(trackStream ? LIVE : duration, text1X, text1Y);
+  ctx.fillText(trackStream ? `LIVE` : duration, text1X, text1Y);
 
   ctx.fillStyle = "#fff";
   ctx.font = "30px Arial";
@@ -97,10 +110,7 @@ async function createCard(
   ctx.fillText(
     trackStream
       ? `LIVE`
-      : prettyMilliseconds(trackTotalDuration, {
-          colonNotation: true,
-          secondsDecimalDigits: 0,
-        }),
+      : totalDuration,
     text2X,
     text2Y
   );
