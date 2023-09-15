@@ -1,7 +1,13 @@
 const { createCanvas, loadImage } = require("canvas");
 const Jimp = require("jimp");
 
-async function createCard(imageBg, imageText, trackStream, trackDuration) {
+async function createCard(
+  imageBg,
+  imageText,
+  trackStream,
+  trackDuration,
+  trackTotalDuration
+) {
   const prettyMilliseconds = (await import("pretty-ms")).default;
   const canvasWidth = 1200;
   const canvasHeight = 400;
@@ -21,30 +27,68 @@ async function createCard(imageBg, imageText, trackStream, trackDuration) {
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  const totalTrackDuration = trackTotalDuration;
+  const currentTrackDuration = trackDuration;
+
   const progressWidth = 700;
   const progressHeight = 8;
   const progressX = 420;
   const progressY = 280;
   const borderRadius1 = 10;
 
-  const progressValue = 1.0;
-  const progressColor = "gray";
+  const progressPercentage = (currentTrackDuration / totalTrackDuration) * 100;
 
-  ctx.fillStyle = progressColor;
+  const gradients = ctx.createLinearGradient(
+    progressX,
+    0,
+    progressX + progressWidth,
+    0
+  );
+
+  gradients.addColorStop(0, "white");
+
+  gradients.addColorStop(progressPercentage / 100, "white");
+  gradients.addColorStop(progressPercentage / 100, "gray");
+  gradients.addColorStop(1, "gray");
+
+  ctx.fillStyle = gradients;
+
   ctx.roundRect(
     progressX,
     progressY,
-    progressWidth * progressValue,
+    progressWidth,
     progressHeight,
     borderRadius1
   );
   ctx.fill();
 
+  const dotX = progressX + (progressWidth * progressPercentage) / 100;
+  const dotY = progressY + progressHeight / 2;
+  const dotRadius = 8;
+
+  ctx.fillStyle = "white";
+  ctx.beginPath();
+  ctx.arc(dotX, dotY, dotRadius, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.fill();
+
+  let duration;
+
+  if (trackDuration === null) {
+    duration = "0:00";
+  }
+  if (trackDuration) {
+    duration = prettyMilliseconds(trackDuration, {
+      colonNotation: true,
+      secondsDecimalDigits: 0,
+    });
+  }
+
   ctx.fillStyle = "#fff";
   ctx.font = "30px Arial";
   const text1X = 420;
   const text1Y = 330;
-  ctx.fillText(trackStream ? LIVE : "0:00", text1X, text1Y);
+  ctx.fillText(trackStream ? LIVE : duration, text1X, text1Y);
 
   ctx.fillStyle = "#fff";
   ctx.font = "30px Arial";
@@ -53,8 +97,9 @@ async function createCard(imageBg, imageText, trackStream, trackDuration) {
   ctx.fillText(
     trackStream
       ? `LIVE`
-      : prettyMilliseconds(trackDuration, {
+      : prettyMilliseconds(trackTotalDuration, {
           colonNotation: true,
+          secondsDecimalDigits: 0,
         }),
     text2X,
     text2Y

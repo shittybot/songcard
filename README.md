@@ -19,24 +19,19 @@ npm install songcard
 yarn add songcard
 ```
 
-
 ## Example
 ```js
 const createCard = require("songcard"); // Import
 const { AttachmentBuilder } = require("discord.js");
 
 client.on("interactionCreate", async (message) => {
-    (imageBg =
-      "https://images-ext-1.discordapp.net/external/uw_-bWFyeXnWb11wGThe2CAbTYdrxzFqMJ2trxDIYVE/https/i.scdn.co/image/ab67616d0000b2738ad8f5243d6534e03b656c8b?width=468&height=468"), // Song card image
-    (imageText = "Die For You (with Ariana Grande) - Remix"), // Song card text
-    (trackStream = false), // If trackStream = true, track duration will return LIVE
-    (trackDuration = 233000); // Song duration
     
     const cardImage = await createCard(
-        imageBg,
-        imageText,
-        trackStream,
-        trackDuration
+        imageBg =  "https://images-ext-1.discordapp.net/external/uw_-bWFyeXnWb11wGThe2CAbTYdrxzFqMJ2trxDIYVE/https/i.scdn.co/image/ab67616d0000b2738ad8f5243d6534e03b656c8b?width=468&height=468",
+        imageText = "Die For You (with Ariana Grande) - Remix",
+        trackStream = false,
+        trackDuration = 220000,
+        trackTotalDuration = 233000,
     );
 
     const attachment = new AttachmentBuilder(cardImage, {
@@ -50,6 +45,16 @@ client.on("interactionCreate", async (message) => {
 
 client.login("token");
 ```
+
+## Usage
+
+| Option                 | Type                   | Description                                                                                                                                          |
+|------------------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| imageBg                | String                  | Image that will be display to the songcard. <br><br> Example: https://images-ext-1.discordapp.net/external/uw_-bWFyeXnWb11wGThe2CAbTYdrxzFqMJ2trxDIYVE/https/i.scdn.co/image/ab67616d0000b2738ad8f5243d6534e03b656c8b?width=468&height=468 <br>File format: PNG/JPEG                      |
+| imageText              | String                  | Text that will be display to the songcard.                                                                                                        |
+| trackStream            | Boolean                 | Whether to set the trackDuration and trackTotalDuration to `LIVE`<br><br>Example: if trackStream is `true` the trackDuration and totalTrackDuration will show as `LIVE` else it will show number. |
+| trackDuration          | Integer                 | Show current duration of the songs. If no value provide it will show `0:00`.                                                                                                      |
+| trackTotalDuration     | Integer                 | Show the songs duration.                                                                                                    |
 
 <br>
 <br>
