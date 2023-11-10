@@ -20,9 +20,15 @@ async function createCard(
   const sampleColor = imageToAdds.getPixelColor(0, 0);
   const { r, g, b } = Jimp.intToRGBA(sampleColor);
 
+  const brightnessFactor = 0.7;
+
+  const adjustedR = Math.round(r * brightnessFactor);
+  const adjustedG = Math.round(g * brightnessFactor);
+  const adjustedB = Math.round(b * brightnessFactor);
+
   const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-  gradient.addColorStop(0, `rgb(${r}, ${g}, ${b})`);
-  gradient.addColorStop(1, `rgb(${r}, ${g}, ${b})`);
+  gradient.addColorStop(0, `rgb(${adjustedR}, ${adjustedG}, ${adjustedB})`);
+  gradient.addColorStop(1, `rgb(${adjustedR}, ${adjustedG}, ${adjustedB})`);
 
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -87,14 +93,13 @@ async function createCard(
   let totalDuration;
 
   if (!trackTotalDuration) {
-      totalDuration = "0:00";
+    totalDuration = "0:00";
   }
-     if (trackTotalDuration) {
-      totalDuration = prettyMilliseconds(trackTotalDuration, {
-        colonNotation: true,
-        secondsDecimalDigits: 0,
-      });
-     
+  if (trackTotalDuration) {
+    totalDuration = prettyMilliseconds(trackTotalDuration, {
+      colonNotation: true,
+      secondsDecimalDigits: 0,
+    });
   }
 
   ctx.fillStyle = "#fff";
@@ -107,13 +112,7 @@ async function createCard(
   ctx.font = "30px Arial";
   const text2X = 1060;
   const text2Y = 330;
-  ctx.fillText(
-    trackStream
-      ? `LIVE`
-      : totalDuration,
-    text2X,
-    text2Y
-  );
+  ctx.fillText(trackStream ? `LIVE` : totalDuration, text2X, text2Y);
 
   const imageSize = Math.min(canvasHeight - 80, canvasWidth - 80);
   const imageX = 40;
