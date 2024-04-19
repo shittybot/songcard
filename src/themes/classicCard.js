@@ -1,5 +1,6 @@
 const { createCanvas, loadImage } = require("canvas");
 const Jimp = require("jimp");
+const path = require("path");
 
 async function classicCard({
   imageBg,
@@ -8,6 +9,10 @@ async function classicCard({
   trackDuration,
   trackTotalDuration,
 }) {
+  const Canvas = require("canvas");
+  const fontPath = path.join(__dirname, '..', 'fonts', 'NotoSans-Regular.ttf');
+  Canvas.registerFont(fontPath, { family: "Noto Sans" });
+
   const prettyMilliseconds = (await import("pretty-ms")).default;
   const canvasWidth = 1200;
   const canvasHeight = 400;
