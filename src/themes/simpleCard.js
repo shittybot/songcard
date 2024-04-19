@@ -1,11 +1,10 @@
-const { createCanvas, loadImage } = require("canvas");
+const { createCanvas, loadImage, registerFont } = require("canvas");
 const Jimp = require("jimp");
 const path = require("path");
 
 async function simpleCard({ imageBg, imageText }) {
-  const Canvas = require("canvas");
   const fontPath = path.join(__dirname, '..', 'fonts', 'NotoSans-Regular.ttf');
-  Canvas.registerFont(fontPath, { family: "Noto Sans" });
+  registerFont(fontPath, { family: "Noto Sans" });
 
   const canvasWidth = 600;
   const canvasHeight = 600;
