@@ -96,12 +96,12 @@ async function simpleCard({ imageBg, imageText }) {
     truncatedText += "...";
 
     ctx.fillStyle = "#fff";
-    ctx.font = "35px Arial";
+    ctx.font = "35px Noto Sans";
     ctx.textAlign = "center";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "35px Arial";
+    ctx.font = "35px Noto Sans";
     ctx.textAlign = "center";
     ctx.fillText(text, textX, textY);
   }

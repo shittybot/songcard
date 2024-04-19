@@ -103,13 +103,13 @@ async function classicCard({
   }
 
   ctx.fillStyle = "#fff";
-  ctx.font = "30px Arial";
+  ctx.font = "30px Noto Sans";
   const text1X = 420;
   const text1Y = 330;
   ctx.fillText(trackStream ? `LIVE` : duration, text1X, text1Y);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "30px Arial";
+  ctx.font = "30px Noto Sans";
   const text2X = 1060;
   const text2Y = 330;
   ctx.fillText(trackStream ? `LIVE` : totalDuration, text2X, text2Y);
@@ -184,11 +184,11 @@ async function classicCard({
     truncatedText += "...";
 
     ctx.fillStyle = "#fff";
-    ctx.font = "40px Arial";
+    ctx.font = "40px Noto Sans";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "40px Arial";
+    ctx.font = "40px Noto Sans";
     ctx.fillText(text, textX, textY);
   }
   return canvas.toBuffer();
