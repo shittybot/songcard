@@ -1,6 +1,5 @@
-const { createCanvas, loadImage, registerFont } = require("canvas");
+const { createCanvas, loadImage } = require("canvas");
 const Jimp = require("jimp");
-const path = require("path");
 
 async function classicCard({
   imageBg,
@@ -9,8 +8,6 @@ async function classicCard({
   trackDuration,
   trackTotalDuration,
 }) {
-  const fontPath = path.join(__dirname, '..', 'fonts', 'NotoSans-Regular.ttf');
-  registerFont(fontPath, { family: "Noto Sans" });
 
   const prettyMilliseconds = (await import("pretty-ms")).default;
   const canvasWidth = 1200;
@@ -107,13 +104,13 @@ async function classicCard({
   }
 
   ctx.fillStyle = "#fff";
-  ctx.font = "30px Noto Sans";
+  ctx.font = "30px Sans";
   const text1X = 420;
   const text1Y = 330;
   ctx.fillText(trackStream ? `LIVE` : duration, text1X, text1Y);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "30px Noto Sans";
+  ctx.font = "30px Sans";
   const text2X = 1060;
   const text2Y = 330;
   ctx.fillText(trackStream ? `LIVE` : totalDuration, text2X, text2Y);
@@ -188,11 +185,11 @@ async function classicCard({
     truncatedText += "...";
 
     ctx.fillStyle = "#fff";
-    ctx.font = "40px Noto Sans";
+    ctx.font = "40px Sans";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "40px Noto Sans";
+    ctx.font = "40px Sans";
     ctx.fillText(text, textX, textY);
   }
   return canvas.toBuffer();

@@ -1,11 +1,7 @@
-const { createCanvas, loadImage, registerFont } = require("canvas");
+const { createCanvas, loadImage } = require("canvas");
 const Jimp = require("jimp");
-const path = require("path");
 
 async function simpleCard({ imageBg, imageText }) {
-  const fontPath = path.join(__dirname, '..', 'fonts', 'NotoSans-Regular.ttf');
-  registerFont(fontPath, { family: "Noto Sans" });
-
   const canvasWidth = 600;
   const canvasHeight = 600;
   const canvas = createCanvas(canvasWidth, canvasHeight);
@@ -100,12 +96,12 @@ async function simpleCard({ imageBg, imageText }) {
     truncatedText += "...";
 
     ctx.fillStyle = "#fff";
-    ctx.font = "35px Noto Sans";
+    ctx.font = "35px Sans";
     ctx.textAlign = "center";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "35px Noto Sans";
+    ctx.font = "35px Sans";
     ctx.textAlign = "center";
     ctx.fillText(text, textX, textY);
   }
