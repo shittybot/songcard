@@ -1,4 +1,4 @@
-const { createCanvas, loadImage } = require("canvas");
+const { registerFont, createCanvas, loadImage } = require("canvas");
 const Jimp = require("jimp");
 
 async function simpleCard({ imageBg, imageText }) {
@@ -41,7 +41,7 @@ async function simpleCard({ imageBg, imageText }) {
     0,
     0,
     canvasWidth,
-    canvasHeight
+    canvasHeight,
   );
 
   ctx.save();
@@ -52,21 +52,21 @@ async function simpleCard({ imageBg, imageText }) {
     imageX + imageSize,
     imageY,
     imageX + imageSize,
-    imageY + borderRadius
+    imageY + borderRadius,
   );
   ctx.lineTo(imageX + imageSize, imageY + imageSize - borderRadius);
   ctx.quadraticCurveTo(
     imageX + imageSize,
     imageY + imageSize,
     imageX + imageSize - borderRadius,
-    imageY + imageSize
+    imageY + imageSize,
   );
   ctx.lineTo(imageX + borderRadius, imageY + imageSize);
   ctx.quadraticCurveTo(
     imageX,
     imageY + imageSize,
     imageX,
-    imageY + imageSize - borderRadius
+    imageY + imageSize - borderRadius,
   );
   ctx.lineTo(imageX, imageY + borderRadius);
   ctx.quadraticCurveTo(imageX, imageY, imageX + borderRadius, imageY);
@@ -96,12 +96,12 @@ async function simpleCard({ imageBg, imageText }) {
     truncatedText += "...";
 
     ctx.fillStyle = "#fff";
-    ctx.font = "35px Sans";
+    ctx.font = `35px Sans`;
     ctx.textAlign = "center";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "35px Sans";
+    ctx.font = `35px Sans`;
     ctx.textAlign = "center";
     ctx.fillText(text, textX, textY);
   }

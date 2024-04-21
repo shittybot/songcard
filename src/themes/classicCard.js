@@ -8,7 +8,6 @@ async function classicCard({
   trackDuration,
   trackTotalDuration,
 }) {
-
   const prettyMilliseconds = (await import("pretty-ms")).default;
   const canvasWidth = 1200;
   const canvasHeight = 400;
@@ -49,7 +48,7 @@ async function classicCard({
     progressX,
     0,
     progressX + progressWidth,
-    0
+    0,
   );
 
   gradients.addColorStop(0, "white");
@@ -65,7 +64,7 @@ async function classicCard({
     progressY,
     progressWidth,
     progressHeight,
-    borderRadius1
+    borderRadius1,
   );
   ctx.fill();
 
@@ -130,7 +129,7 @@ async function classicCard({
     0,
     0,
     canvasWidth,
-    canvasHeight
+    canvasHeight,
   );
 
   ctx.save();
@@ -141,21 +140,21 @@ async function classicCard({
     imageX + imageSize,
     imageY,
     imageX + imageSize,
-    imageY + borderRadius
+    imageY + borderRadius,
   );
   ctx.lineTo(imageX + imageSize, imageY + imageSize - borderRadius);
   ctx.quadraticCurveTo(
     imageX + imageSize,
     imageY + imageSize,
     imageX + imageSize - borderRadius,
-    imageY + imageSize
+    imageY + imageSize,
   );
   ctx.lineTo(imageX + borderRadius, imageY + imageSize);
   ctx.quadraticCurveTo(
     imageX,
     imageY + imageSize,
     imageX,
-    imageY + imageSize - borderRadius
+    imageY + imageSize - borderRadius,
   );
   ctx.lineTo(imageX, imageY + borderRadius);
   ctx.quadraticCurveTo(imageX, imageY, imageX + borderRadius, imageY);
