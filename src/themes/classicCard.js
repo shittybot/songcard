@@ -1,5 +1,6 @@
-const { createCanvas, loadImage } = require("canvas");
+const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
 const Jimp = require("jimp");
+const path = require("path");
 
 async function classicCard({
   imageBg,
@@ -8,11 +9,14 @@ async function classicCard({
   trackDuration,
   trackTotalDuration,
 }) {
-  const prettyMilliseconds = (await import("pretty-ms")).default;
   const canvasWidth = 1200;
   const canvasHeight = 400;
   const canvas = createCanvas(canvasWidth, canvasHeight);
   const ctx = canvas.getContext("2d");
+  const prettyMilliseconds = (await import("pretty-ms")).default;
+
+  const fontPath = path.join(__dirname, "..", "fonts", "ArialUnicodeMS.ttf");
+  GlobalFonts.registerFromPath(fontPath, "ArialUnicodeMS");
 
   const imageToAdd = await loadImage(imageBg);
   const imageToAdds = await Jimp.read(imageBg);
@@ -48,13 +52,12 @@ async function classicCard({
     progressX,
     0,
     progressX + progressWidth,
-    0,
+    0
   );
 
   gradients.addColorStop(0, "white");
-
   gradients.addColorStop(progressPercentage / 100, "white");
-  gradients.addColorStop(progressPercentage / 100, "gray");
+  gradients.addColorStop(progressPercentage / 100 + 0.01, "gray");
   gradients.addColorStop(1, "gray");
 
   ctx.fillStyle = gradients;
@@ -64,7 +67,7 @@ async function classicCard({
     progressY,
     progressWidth,
     progressHeight,
-    borderRadius1,
+    borderRadius1
   );
   ctx.fill();
 
@@ -103,13 +106,13 @@ async function classicCard({
   }
 
   ctx.fillStyle = "#fff";
-  ctx.font = "30px Sans";
+  ctx.font = "30px 'ArialUnicodeMS'";
   const text1X = 420;
   const text1Y = 330;
   ctx.fillText(trackStream ? `LIVE` : duration, text1X, text1Y);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "30px Sans";
+  ctx.font = "30px 'ArialUnicodeMS'";
   const text2X = 1060;
   const text2Y = 330;
   ctx.fillText(trackStream ? `LIVE` : totalDuration, text2X, text2Y);
@@ -119,7 +122,6 @@ async function classicCard({
   const imageY = 40;
   const borderRadius = 25;
 
-  ctx.filter = "blur(5px)";
   ctx.drawImage(
     canvas,
     0,
@@ -129,7 +131,7 @@ async function classicCard({
     0,
     0,
     canvasWidth,
-    canvasHeight,
+    canvasHeight
   );
 
   ctx.save();
@@ -140,21 +142,21 @@ async function classicCard({
     imageX + imageSize,
     imageY,
     imageX + imageSize,
-    imageY + borderRadius,
+    imageY + borderRadius
   );
   ctx.lineTo(imageX + imageSize, imageY + imageSize - borderRadius);
   ctx.quadraticCurveTo(
     imageX + imageSize,
     imageY + imageSize,
     imageX + imageSize - borderRadius,
-    imageY + imageSize,
+    imageY + imageSize
   );
   ctx.lineTo(imageX + borderRadius, imageY + imageSize);
   ctx.quadraticCurveTo(
     imageX,
     imageY + imageSize,
     imageX,
-    imageY + imageSize - borderRadius,
+    imageY + imageSize - borderRadius
   );
   ctx.lineTo(imageX, imageY + borderRadius);
   ctx.quadraticCurveTo(imageX, imageY, imageX + borderRadius, imageY);
@@ -184,14 +186,14 @@ async function classicCard({
     truncatedText += "...";
 
     ctx.fillStyle = "#fff";
-    ctx.font = "40px Sans";
+    ctx.font = "40px 'ArialUnicodeMS'";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "40px Sans";
+    ctx.font = "40px 'ArialUnicodeMS'";
     ctx.fillText(text, textX, textY);
   }
-  return canvas.toBuffer();
+  return canvas.toBuffer("image/png");
 }
 
 module.exports = { classicCard };

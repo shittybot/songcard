@@ -1,11 +1,15 @@
-const { registerFont, createCanvas, loadImage } = require("canvas");
+const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
 const Jimp = require("jimp");
+const path = require("path");
 
 async function simpleCard({ imageBg, imageText }) {
   const canvasWidth = 600;
   const canvasHeight = 600;
   const canvas = createCanvas(canvasWidth, canvasHeight);
   const ctx = canvas.getContext("2d");
+
+  const fontPath = path.join(__dirname, "..", "fonts", "ArialUnicodeMS.ttf");
+  GlobalFonts.registerFromPath(fontPath, "ArialUnicodeMS");
 
   const imageToAdd = await loadImage(imageBg);
   const imageToAdds = await Jimp.read(imageBg);
@@ -31,19 +35,6 @@ async function simpleCard({ imageBg, imageText }) {
   const imageY = (canvasHeight - imageSize - 40) / 2;
   const borderRadius = 25;
 
-  ctx.filter = "blur(5px)";
-  ctx.drawImage(
-    canvas,
-    0,
-    0,
-    canvasWidth,
-    canvasHeight,
-    0,
-    0,
-    canvasWidth,
-    canvasHeight,
-  );
-
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(imageX + borderRadius, imageY);
@@ -52,21 +43,21 @@ async function simpleCard({ imageBg, imageText }) {
     imageX + imageSize,
     imageY,
     imageX + imageSize,
-    imageY + borderRadius,
+    imageY + borderRadius
   );
   ctx.lineTo(imageX + imageSize, imageY + imageSize - borderRadius);
   ctx.quadraticCurveTo(
     imageX + imageSize,
     imageY + imageSize,
     imageX + imageSize - borderRadius,
-    imageY + imageSize,
+    imageY + imageSize
   );
   ctx.lineTo(imageX + borderRadius, imageY + imageSize);
   ctx.quadraticCurveTo(
     imageX,
     imageY + imageSize,
     imageX,
-    imageY + imageSize - borderRadius,
+    imageY + imageSize - borderRadius
   );
   ctx.lineTo(imageX, imageY + borderRadius);
   ctx.quadraticCurveTo(imageX, imageY, imageX + borderRadius, imageY);
@@ -85,27 +76,23 @@ async function simpleCard({ imageBg, imageText }) {
 
   if (textWidth > maxWidth) {
     const ellipsisWidth = ctx.measureText("...").width;
-
     const availableWidth = maxWidth - ellipsisWidth;
-
     let truncatedText = text;
     while (ctx.measureText(truncatedText).width > availableWidth) {
       truncatedText = truncatedText.slice(0, -1);
     }
-
     truncatedText += "...";
-
     ctx.fillStyle = "#fff";
-    ctx.font = `35px Sans`;
+    ctx.font = "35px 'ArialUnicodeMS'";
     ctx.textAlign = "center";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = `35px Sans`;
+    ctx.font = "35px 'ArialUnicodeMS'";
     ctx.textAlign = "center";
     ctx.fillText(text, textX, textY);
   }
-  return canvas.toBuffer();
+  return canvas.toBuffer("image/png");
 }
 
 module.exports = { simpleCard };

@@ -1,6 +1,6 @@
 {
   "name": "songcard",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +9,9 @@
   "license": "ISC",
   "description": "A simple package to create song card.",
   "dependencies": {
-    "canvas": "^2.11.2",
+    "@napi-rs/canvas": "^0.1.52",
     "jimp": "^0.22.12",
+    "path": "^0.12.7",
     "pretty-ms": "^9.0.0"
   },
   "repository": {
