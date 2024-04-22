@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LewdHuTao/songcard.git"
+    "url": "git+https://github.com/shittybot/songcard.git"
   },
   "bugs": {
-    "url": "https://github.com/LewdHuTao/songcard/issues"
+    "url": "https://github.com/shittybot/songcard/issues"
   },
-  "homepage": "https://github.com/LewdHuTao/songcard#readme",
+  "homepage": "https://github.com/shittybot/songcard#readme",
   "keywords": [
     "discord.js",
     "discord",
