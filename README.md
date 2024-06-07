@@ -18,17 +18,6 @@ npm install songcard
 # or
 yarn add songcard
 ```
-<br>
-
-## Usage
-
-| Option                 | Type                   | Description                                                                                                                                          |
-|------------------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| imageBg                | String                  | Image that will be display to the songcard. <br><br> Example: https://images-ext-1.discordapp.net/external/uw_-bWFyeXnWb11wGThe2CAbTYdrxzFqMJ2trxDIYVE/https/i.scdn.co/image/ab67616d0000b2738ad8f5243d6534e03b656c8b?width=468&height=468 <br>File format: PNG/JPEG                      |
-| imageText              | String                  | Text that will be display to the songcard.                                                                                                        |
-| trackStream            | Boolean                 | Whether to set the trackDuration and trackTotalDuration to `LIVE`<br><br>Example: if trackStream is `true` the trackDuration and totalTrackDuration will show as `LIVE` else it will show number. |
-| trackDuration          | Integer                 | Show current duration of the songs. If no value provide it will show `0:00`.                                                                                                      |
-| trackTotalDuration     | Integer                 | Show the songs duration.                                                                                                    |
 
 <br>
 
@@ -37,21 +26,29 @@ yarn add songcard
 ## 1. Classic
 
 
-![](./src/examples/assets/card1.png)
+![](./src/assets/card1.png)
 
 ### Example
 
-![](./src/examples/assets/code1.png)
+![](./src/assets/code1.png)
 
 <br>
 
 ## 2. Simple
 
-![](./src/examples/assets/card2.png)
+![](./src/assets/card2.png)
 
 ### Example
 
-![](./src/examples/assets/code2.png)
+![](./src/assets/code2.png)
+
+## 3. Dynamic
+
+![](./src/assets/card3.png)
+
+### Example
+
+![](./src/assets/code3.png)
 
 
 
