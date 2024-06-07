@@ -167,7 +167,7 @@ async function dynamicCard({
   ctx.fillText(
     `Requested by: ${trackRequester}`,
     padding + 10,
-    cardHeight - padding - 20
+    cardHeight - padding - 30
   );
 
   const buffer = canvas.toBuffer("image/png");
