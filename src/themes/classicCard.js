@@ -186,11 +186,11 @@ async function classicCard({
     truncatedText += "...";
 
     ctx.fillStyle = "#fff";
-    ctx.font = "40px 'ArialUnicodeMS'";
+    ctx.font = "bold 40px 'ArialUnicodeMS'";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "40px 'ArialUnicodeMS'";
+    ctx.font = "bold 40px 'ArialUnicodeMS'";
     ctx.fillText(text, textX, textY);
   }
   return canvas.toBuffer("image/png");
