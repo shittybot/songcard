@@ -111,6 +111,7 @@ async function dynamicCard({
     spotify: path.join(__dirname, "..", "assets", "spotify.png"),
     youtube: path.join(__dirname, "..", "assets", "youtube.png"),
     soundcloud: path.join(__dirname, "..", "assets", "soundcloud.png"),
+    applemusic: path.join(__dirname, "..", "assets", "applemusic.png"),
   };
 
   if (streamProvider && streamProviderIcons[streamProvider.toLowerCase()]) {
