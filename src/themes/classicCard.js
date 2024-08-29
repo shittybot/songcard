@@ -1,6 +1,6 @@
-const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
+const { createCanvas, loadImage } = require("@napi-rs/canvas");
+const { fontRegister } = require("../utils/fontRegister");
 const Jimp = require("jimp");
-const path = require("path");
 
 async function classicCard({
   imageBg,
@@ -8,6 +8,7 @@ async function classicCard({
   trackStream,
   trackDuration,
   trackTotalDuration,
+  fontPath,
 }) {
   const canvasWidth = 1200;
   const canvasHeight = 400;
@@ -15,8 +16,9 @@ async function classicCard({
   const ctx = canvas.getContext("2d");
   const prettyMilliseconds = (await import("pretty-ms")).default;
 
-  const fontPath = path.join(__dirname, "..", "fonts", "ArialUnicodeMS.ttf");
-  GlobalFonts.registerFromPath(fontPath, "ArialUnicodeMS");
+  if (fontPath) {
+    await fontRegister(fontPath, "CustomFont");
+  }
 
   const imageToAdd = await loadImage(imageBg);
   const imageToAdds = await Jimp.read(imageBg);
@@ -106,13 +108,25 @@ async function classicCard({
   }
 
   ctx.fillStyle = "#fff";
-  ctx.font = "30px 'ArialUnicodeMS'";
+
+  if (fontPath) {
+    ctx.font = "30px 'CustomFont'";
+  } else {
+    ctx.font = "30px Arial";
+  }
+
   const text1X = 420;
   const text1Y = 330;
   ctx.fillText(trackStream ? `LIVE` : duration, text1X, text1Y);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "30px 'ArialUnicodeMS'";
+
+  if (fontPath) {
+    ctx.font = "30px 'CustomFont'";
+  } else {
+    ctx.font = "30px Arial";
+  }
+
   const text2X = 1060;
   const text2Y = 330;
   ctx.fillText(trackStream ? `LIVE` : totalDuration, text2X, text2Y);
@@ -186,11 +200,23 @@ async function classicCard({
     truncatedText += "...";
 
     ctx.fillStyle = "#fff";
-    ctx.font = "bold 40px 'ArialUnicodeMS'";
+
+    if (fontPath) {
+      ctx.font = "bold 40px 'CustomFont'";
+    } else {
+      ctx.font = "bold 40px Arial";
+    }
+
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "bold 40px 'ArialUnicodeMS'";
+
+    if (fontPath) {
+      ctx.font = "bold 40px 'CustomFont'";
+    } else {
+      ctx.font = "bold 40px Arial";
+    }
+
     ctx.fillText(text, textX, textY);
   }
   return canvas.toBuffer("image/png");

@@ -1,12 +1,12 @@
-const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
-const path = require("path");
+const { createCanvas, loadImage } = require("@napi-rs/canvas");
+const { fontRegister } = require("../utils/fontRegister");
 
 async function dynamicCard({
-  thumbnailURL, // required
-  songTitle, // required
-  songArtist, // optional
-  streamProvider, // optional
-  trackRequester, // optional
+  thumbnailURL,
+  songTitle,
+  songArtist,
+  trackRequester,
+  fontPath,
 }) {
   const cardWidth = 800;
   const cardHeight = 250;
@@ -15,8 +15,9 @@ async function dynamicCard({
   const canvas = createCanvas(cardWidth, cardHeight);
   const ctx = canvas.getContext("2d");
 
-  const fontPath = path.join(__dirname, "..", "fonts", "ArialUnicodeMS.ttf");
-  GlobalFonts.registerFromPath(fontPath, "ArialUnicodeMS");
+  if (fontPath) {
+    await fontRegister(fontPath, "CustomFont");
+  }
 
   function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
     if (typeof stroke === "undefined") {
@@ -107,42 +108,14 @@ async function dynamicCard({
   );
   ctx.restore();
 
-  const streamProviderIcons = {
-    spotify: path.join(__dirname, "..", "assets", "spotify.png"),
-    youtube: path.join(__dirname, "..", "assets", "youtube.png"),
-    soundcloud: path.join(__dirname, "..", "assets", "soundcloud.png"),
-    applemusic: path.join(__dirname, "..", "assets", "applemusic.png"),
-  };
+  ctx.fillStyle = "white";
 
-  if (streamProvider && streamProviderIcons[streamProvider.toLowerCase()]) {
-    const providerIcon = await loadImage(
-      streamProviderIcons[streamProvider.toLowerCase()]
-    );
-    const iconSize = 30;
-    const iconPadding = 10;
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(
-      cardWidth - padding - iconPadding - iconSize / 2,
-      cardHeight - padding - iconPadding - iconSize / 2,
-      iconSize / 2,
-      0,
-      Math.PI * 2
-    );
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(
-      providerIcon,
-      cardWidth - padding - iconPadding - iconSize,
-      cardHeight - padding - iconPadding - iconSize,
-      iconSize,
-      iconSize
-    );
-    ctx.restore();
+  if (fontPath) {
+    ctx.font = "bold 35px 'CustomFont'";
+  } else {
+    ctx.font = "bold 35px Arial";
   }
 
-  ctx.fillStyle = "white";
-  ctx.font = "bold 35px 'ArialUnicodeMS'";
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
 
@@ -160,11 +133,21 @@ async function dynamicCard({
   ctx.fillText(truncatedTitle, padding + 10, padding + 20);
 
   ctx.fillStyle = "#A79D9D";
-  ctx.font = "25px 'ArialUnicodeMS'";
+
+  if (fontPath) {
+    ctx.font = "25px 'CustomFont'";
+  } else {
+    ctx.font = "25px Arial";
+  }
 
   ctx.fillText(songArtist, padding + 10, padding + 70);
 
-  ctx.font = "20px 'ArialUnicodeMS'";
+  if (fontPath) {
+    ctx.font = "20px 'CustomFont'";
+  } else {
+    ctx.font = "20px Arial";
+  }
+
   ctx.fillText(
     `Requested by: ${trackRequester}`,
     padding + 10,

@@ -1,15 +1,16 @@
 const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
+const { fontRegister } = require("../utils/fontRegister");
 const Jimp = require("jimp");
-const path = require("path");
 
-async function simpleCard({ imageBg, imageText }) {
+async function simpleCard({ imageBg, imageText, fontPath }) {
   const canvasWidth = 600;
   const canvasHeight = 600;
   const canvas = createCanvas(canvasWidth, canvasHeight);
   const ctx = canvas.getContext("2d");
 
-  const fontPath = path.join(__dirname, "..", "fonts", "ArialUnicodeMS.ttf");
-  GlobalFonts.registerFromPath(fontPath, "ArialUnicodeMS");
+  if (fontPath) {
+    await fontRegister(fontPath, "CustomFont");
+  }
 
   const imageToAdd = await loadImage(imageBg);
   const imageToAdds = await Jimp.read(imageBg);
@@ -73,7 +74,7 @@ async function simpleCard({ imageBg, imageText }) {
   const text = imageText;
 
   const textWidth = ctx.measureText(text).width;
-
+  
   if (textWidth > maxWidth) {
     const ellipsisWidth = ctx.measureText("...").width;
     const availableWidth = maxWidth - ellipsisWidth;
@@ -83,12 +84,24 @@ async function simpleCard({ imageBg, imageText }) {
     }
     truncatedText += "...";
     ctx.fillStyle = "#fff";
-    ctx.font = "35px 'ArialUnicodeMS'";
+
+    if (fontPath) {
+      ctx.font = "35px 'CustomFont'";
+    } else {
+      ctx.font = "35px Arial";
+    }
+
     ctx.textAlign = "center";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
-    ctx.font = "35px 'ArialUnicodeMS'";
+
+    if (fontPath) {
+      ctx.font = "35px 'CustomFont'";
+    } else {
+      ctx.font = "35px Arial";
+    }
+
     ctx.textAlign = "center";
     ctx.fillText(text, textX, textY);
   }
