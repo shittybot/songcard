@@ -1,5 +1,6 @@
 const fs = require("fs");
 const { dynamicCard } = require("../themes/dynamicCard");
+const path = require("path");
 
 async function testdynamicCard() {
   const thumbnailURL =
@@ -8,6 +9,7 @@ async function testdynamicCard() {
   const songArtist = "TWICE";
   const streamProvider = "spotify";
   const trackRequester = "@lewdhutao";
+  const fontPath =  path.join(__dirname, "..", "fonts", "ArialUnicodeMS.ttf")
 
   try {
     const buffer = await dynamicCard({
@@ -16,6 +18,7 @@ async function testdynamicCard() {
       songArtist,
       streamProvider,
       trackRequester,
+      fontPath,
     });
     fs.writeFileSync("dynamicCard.png", buffer);
     console.log("Canvas generated successfully.");
