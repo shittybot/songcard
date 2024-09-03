@@ -4,17 +4,19 @@ const path = require("path");
 
 async function testClassicCard() {
   const imageBg =
-    "https://i.scdn.co/image/ab67616d00001e02730cc8eb459c92944233e891";
-  const imageText = "恋愛サーキュレーション";
+    "https://i.scdn.co/image/ab67616d0000b2738ad8f5243d6534e03b656c8b";
+  const imageText = "Die For You (with Ariana Grande) - Remix";
+  const songArtist = "The Weeknd";
   const trackStream = false;
   const trackDuration = 138000;
-  const trackTotalDuration = 338000;
+  const trackTotalDuration = 232857;
   const fontPath =  path.join(__dirname, "..", "fonts", "ArialUnicodeMS.ttf");
 
   try {
     const buffer = await classicCard({
       imageBg,
       imageText,
+      //songArtist,
       trackStream,
       trackDuration,
       trackTotalDuration,
