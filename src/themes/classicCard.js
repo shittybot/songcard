@@ -49,7 +49,7 @@ async function classicCard({
 
   const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
   gradient.addColorStop(0, adjustedTop);
-  gradient.addColorStop(1, adjustedBottom);
+  gradient.addColorStop(0, adjustedBottom);
 
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvasWidth, canvasHeight);
@@ -175,14 +175,11 @@ async function classicCard({
   };
 
   ctx.fillStyle = textColor;
-  ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
-  ctx.shadowBlur = 6;
   ctx.font = fontPath ? "bold 45px 'CustomFont'" : "bold 50px Arial";
   ctx.fillText(truncateText(imageText, maxWidth), textX, textY);
 
   if (songArtist) {
     ctx.fillStyle = artistColor;
-    ctx.shadowBlur = 4;
     ctx.font = fontPath ? "35px 'CustomFont'" : "30px Arial";
     ctx.fillText(truncateText(songArtist, maxWidth), textX, artistY);
   }

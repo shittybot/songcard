@@ -40,7 +40,7 @@ async function simpleCard({ imageBg, imageText, fontPath }) {
 
   const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
   gradient.addColorStop(0, adjustedTop);
-  gradient.addColorStop(1, adjustedBottom);
+  gradient.addColorStop(0, adjustedBottom);
 
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -105,11 +105,6 @@ async function simpleCard({ imageBg, imageText, fontPath }) {
       ctx.font = "35px Arial";
     }
 
-    ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
-    ctx.shadowBlur = 6;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
-
     ctx.textAlign = "center";
     ctx.fillStyle = "#fff";
     ctx.fillText(truncatedText, textX, textY);
@@ -121,11 +116,6 @@ async function simpleCard({ imageBg, imageText, fontPath }) {
     } else {
       ctx.font = "35px Arial";
     }
-
-    ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
-    ctx.shadowBlur = 6;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
 
     ctx.textAlign = "center";
     ctx.fillText(text, textX, textY);
