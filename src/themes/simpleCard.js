@@ -1,4 +1,4 @@
-const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
+const { createCanvas, loadImage } = require("@napi-rs/canvas");
 const { fontRegister } = require("../utils/fontRegister");
 const Jimp = require("jimp");
 
@@ -15,18 +15,32 @@ async function simpleCard({ imageBg, imageText, fontPath }) {
   const imageToAdd = await loadImage(imageBg);
   const imageToAdds = await Jimp.read(imageBg);
 
-  const sampleColor = imageToAdds.getPixelColor(0, 0);
-  const { r, g, b } = Jimp.intToRGBA(sampleColor);
+  const topColor = imageToAdds.getPixelColor(0, 0);
+  const bottomColor = imageToAdds.getPixelColor(
+    imageToAdds.bitmap.width - 1,
+    imageToAdds.bitmap.height - 1
+  );
+  const { r: r1, g: g1, b: b1 } = Jimp.intToRGBA(topColor);
+  const { r: r2, g: g2, b: b2 } = Jimp.intToRGBA(bottomColor);
 
-  const brightnessFactor = 0.7;
+  const brightFactorTop = 0.7;
+  const brightFactorBottom = 0.7;
 
-  const adjustedR = Math.round(r * brightnessFactor);
-  const adjustedG = Math.round(g * brightnessFactor);
-  const adjustedB = Math.round(b * brightnessFactor);
+  const adjustedTop = `rgb(${Math.min(r1 * brightFactorTop, 255)}, ${Math.min(
+    g1 * brightFactorTop,
+    255
+  )}, ${Math.min(b1 * brightFactorTop, 255)})`;
+  const adjustedBottom = `rgb(${Math.max(
+    r2 * brightFactorBottom,
+    0
+  )}, ${Math.max(g2 * brightFactorBottom, 0)}, ${Math.max(
+    b2 * brightFactorBottom,
+    0
+  )})`;
 
-  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-  gradient.addColorStop(0, `rgb(${adjustedR}, ${adjustedG}, ${adjustedB})`);
-  gradient.addColorStop(1, `rgb(${adjustedR}, ${adjustedG}, ${adjustedB})`);
+  const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
+  gradient.addColorStop(0, adjustedTop);
+  gradient.addColorStop(1, adjustedBottom);
 
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -74,7 +88,7 @@ async function simpleCard({ imageBg, imageText, fontPath }) {
   const text = imageText;
 
   const textWidth = ctx.measureText(text).width;
-  
+
   if (textWidth > maxWidth) {
     const ellipsisWidth = ctx.measureText("...").width;
     const availableWidth = maxWidth - ellipsisWidth;
@@ -91,7 +105,13 @@ async function simpleCard({ imageBg, imageText, fontPath }) {
       ctx.font = "35px Arial";
     }
 
+    ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+    ctx.shadowBlur = 6;
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+
     ctx.textAlign = "center";
+    ctx.fillStyle = "#fff";
     ctx.fillText(truncatedText, textX, textY);
   } else {
     ctx.fillStyle = "#fff";
@@ -102,9 +122,15 @@ async function simpleCard({ imageBg, imageText, fontPath }) {
       ctx.font = "35px Arial";
     }
 
+    ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+    ctx.shadowBlur = 6;
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+
     ctx.textAlign = "center";
     ctx.fillText(text, textX, textY);
   }
+
   return canvas.toBuffer("image/png");
 }
 
